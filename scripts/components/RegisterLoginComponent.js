@@ -15,13 +15,13 @@ module.exports = React.createClass({
 		}
 		if(url === 'login') {
 			return(
-				<form className="loginForm">
+				<form className="loginForm" onSubmit={this.onLogin}>
   					<div className="form-group">
   						{errorElement}
     					<label>Email address</label>
     					<input type="email" className="form-control" ref="email" placeholder="Email" />
   					</div>
-  					<div class="form-group">
+  					<div className="form-group">
     					<label>Password</label>
     					<input type="password" className="form-control" ref="password" placeholder="Password" />
   					</div>
@@ -31,21 +31,21 @@ module.exports = React.createClass({
 		}
 		else {
 			return(
-				<form className="registerForm">
+				<form className="registerForm" onSubmit={this.onRegister}>
   					<div className="form-group">
   						{errorElement}
     					<label>First Name</label>
     					<input type="text" className="form-control" ref="firstName" placeholder="First Name" />
   					</div>
-  					<div class="form-group">
+  					<div className="form-group">
     					<label>Last Name</label>
     					<input type="text" className="form-control" ref="lastName" placeholder="Last Name" />
   					</div>
-  					<div class="form-group">
+  					<div className="form-group">
     					<label>Email</label>
     					<input type="email" className="form-control" ref="email" placeholder="yourEmail@you.com" />
   					</div>
-  					<div class="form-group">
+  					<div className="form-group">
     					<label>Password</label>
     					<input type="password" className="form-control" ref="password" placeholder="Password" />
   					</div>
@@ -53,5 +53,43 @@ module.exports = React.createClass({
 				</form>
 			)
 		}
+	},
+	onLogin: function(e) {
+		e.preventDefault();
+		Parse.User.logIn(
+			this.refs.email.value,
+			this.refs.password.value,
+			{
+				success: (u) => {
+					this.props.router.navigate('blogs', {trigger: true});
+				},
+				error: (u, error) => {
+					this.setState({
+						error: error.message
+				});
+			}
+		});
+	},
+	onRegister: function(e) {
+		console.log('this is working');
+		e.preventDefault();
+		var user = new Parse.User();
+		user.signUp({
+			firstName: this.refs.firstName.value,
+			lastName: this.refs.lastName.value,
+			username: this.refs.email.value,
+			password: this.refs.password.value
+		},
+		{
+			success: (u) => {
+				this.props.router.navigate('blogs', {trigger: true});
+			},
+			error: (u, error) => {
+				console.log(error);
+				this.setState({
+					error: error.message
+				});
+			}
+		});
 	}
 });

@@ -1,5 +1,5 @@
 'use strict';
-Parse.initialize('kkMpL68O41xvQfa9PVxYz2lNfs8Pf3ADE63mvupZ', 'x6yVIGt3mRIcqNNlVJBsGoeh2NtB9xA3nhtsQg9p');
+Parse.initialize('kkMpL68O41xvQfa9PVxYz2lNfs8Pf3ADE63mvupZ', 'EEWp0igFHSCD5ZEgg8qwu1tuTIjp93B5SEWXe9zI');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
@@ -32,7 +32,7 @@ var Router = Backbone.Router.extend({
 	},
 	registerLogin: function() {
 		ReactDOM.render(
-			<RegisterLoginComponent />,
+			<RegisterLoginComponent router={r}/>,
 			app
 			)
 	},

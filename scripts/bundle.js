@@ -31817,110 +31817,148 @@ var React = require('react');
 var Backbone = require('backbone');
 
 module.exports = React.createClass({
-  displayName: 'exports',
+	displayName: 'exports',
 
-  getInitialState: function getInitialState() {
-    return { error: null };
-  },
-  render: function render() {
-    var errorElement = null;
-    var url = Backbone.history.getFragment();
-    if (this.state.error) {
-      errorElement = React.createElement(
-        'p',
-        { className: 'red' },
-        this.state.error
-      );
-    }
-    if (url === 'login') {
-      return React.createElement(
-        'form',
-        { className: 'loginForm' },
-        React.createElement(
-          'div',
-          { className: 'form-group' },
-          errorElement,
-          React.createElement(
-            'label',
-            null,
-            'Email address'
-          ),
-          React.createElement('input', { type: 'email', className: 'form-control', ref: 'email', placeholder: 'Email' })
-        ),
-        React.createElement(
-          'div',
-          { 'class': 'form-group' },
-          React.createElement(
-            'label',
-            null,
-            'Password'
-          ),
-          React.createElement('input', { type: 'password', className: 'form-control', ref: 'password', placeholder: 'Password' })
-        ),
-        React.createElement(
-          'button',
-          { type: 'submit', className: 'btn btn-default' },
-          'Log On!'
-        )
-      );
-    } else {
-      return React.createElement(
-        'form',
-        { className: 'registerForm' },
-        React.createElement(
-          'div',
-          { className: 'form-group' },
-          errorElement,
-          React.createElement(
-            'label',
-            null,
-            'First Name'
-          ),
-          React.createElement('input', { type: 'text', className: 'form-control', ref: 'firstName', placeholder: 'First Name' })
-        ),
-        React.createElement(
-          'div',
-          { 'class': 'form-group' },
-          React.createElement(
-            'label',
-            null,
-            'Last Name'
-          ),
-          React.createElement('input', { type: 'text', className: 'form-control', ref: 'lastName', placeholder: 'Last Name' })
-        ),
-        React.createElement(
-          'div',
-          { 'class': 'form-group' },
-          React.createElement(
-            'label',
-            null,
-            'Email'
-          ),
-          React.createElement('input', { type: 'email', className: 'form-control', ref: 'email', placeholder: 'yourEmail@you.com' })
-        ),
-        React.createElement(
-          'div',
-          { 'class': 'form-group' },
-          React.createElement(
-            'label',
-            null,
-            'Password'
-          ),
-          React.createElement('input', { type: 'password', className: 'form-control', ref: 'password', placeholder: 'Password' })
-        ),
-        React.createElement(
-          'button',
-          { type: 'submit', className: 'btn btn-default' },
-          'Register!'
-        )
-      );
-    }
-  }
+	getInitialState: function getInitialState() {
+		return { error: null };
+	},
+	render: function render() {
+		var errorElement = null;
+		var url = Backbone.history.getFragment();
+		if (this.state.error) {
+			errorElement = React.createElement(
+				'p',
+				{ className: 'red' },
+				this.state.error
+			);
+		}
+		if (url === 'login') {
+			return React.createElement(
+				'form',
+				{ className: 'loginForm', onSubmit: this.onLogin },
+				React.createElement(
+					'div',
+					{ className: 'form-group' },
+					errorElement,
+					React.createElement(
+						'label',
+						null,
+						'Email address'
+					),
+					React.createElement('input', { type: 'email', className: 'form-control', ref: 'email', placeholder: 'Email' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'form-group' },
+					React.createElement(
+						'label',
+						null,
+						'Password'
+					),
+					React.createElement('input', { type: 'password', className: 'form-control', ref: 'password', placeholder: 'Password' })
+				),
+				React.createElement(
+					'button',
+					{ type: 'submit', className: 'btn btn-default' },
+					'Log On!'
+				)
+			);
+		} else {
+			return React.createElement(
+				'form',
+				{ className: 'registerForm', onSubmit: this.onRegister },
+				React.createElement(
+					'div',
+					{ className: 'form-group' },
+					errorElement,
+					React.createElement(
+						'label',
+						null,
+						'First Name'
+					),
+					React.createElement('input', { type: 'text', className: 'form-control', ref: 'firstName', placeholder: 'First Name' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'form-group' },
+					React.createElement(
+						'label',
+						null,
+						'Last Name'
+					),
+					React.createElement('input', { type: 'text', className: 'form-control', ref: 'lastName', placeholder: 'Last Name' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'form-group' },
+					React.createElement(
+						'label',
+						null,
+						'Email'
+					),
+					React.createElement('input', { type: 'email', className: 'form-control', ref: 'email', placeholder: 'yourEmail@you.com' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'form-group' },
+					React.createElement(
+						'label',
+						null,
+						'Password'
+					),
+					React.createElement('input', { type: 'password', className: 'form-control', ref: 'password', placeholder: 'Password' })
+				),
+				React.createElement(
+					'button',
+					{ type: 'submit', className: 'btn btn-default' },
+					'Register!'
+				)
+			);
+		}
+	},
+	onLogin: function onLogin(e) {
+		var _this = this;
+
+		e.preventDefault();
+		Parse.User.logIn(this.refs.email.value, this.refs.password.value, {
+			success: function success(u) {
+				_this.props.router.navigate('blogs', { trigger: true });
+			},
+			error: function error(u, _error) {
+				_this.setState({
+					error: _error.message
+				});
+			}
+		});
+	},
+	onRegister: function onRegister(e) {
+		var _this2 = this;
+
+		console.log('this is working');
+		e.preventDefault();
+		var user = new Parse.User();
+		user.signUp({
+			firstName: this.refs.firstName.value,
+			lastName: this.refs.lastName.value,
+			username: this.refs.email.value,
+			password: this.refs.password.value
+		}, {
+			success: function success(u) {
+				_this2.props.router.navigate('blogs', { trigger: true });
+			},
+			error: function error(u, _error2) {
+				console.log(_error2);
+				_this2.setState({
+					error: _error2.message
+				});
+			}
+		});
+	}
 });
 
 },{"backbone":1,"react":160}],164:[function(require,module,exports){
 'use strict';
-Parse.initialize('kkMpL68O41xvQfa9PVxYz2lNfs8Pf3ADE63mvupZ', 'x6yVIGt3mRIcqNNlVJBsGoeh2NtB9xA3nhtsQg9p');
+Parse.initialize('kkMpL68O41xvQfa9PVxYz2lNfs8Pf3ADE63mvupZ', 'EEWp0igFHSCD5ZEgg8qwu1tuTIjp93B5SEWXe9zI');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
@@ -31946,7 +31984,7 @@ var Router = Backbone.Router.extend({
 		ReactDOM.render(React.createElement(HomePageComponent, null), app);
 	},
 	registerLogin: function registerLogin() {
-		ReactDOM.render(React.createElement(RegisterLoginComponent, null), app);
+		ReactDOM.render(React.createElement(RegisterLoginComponent, { router: r }), app);
 	}
 });
 
