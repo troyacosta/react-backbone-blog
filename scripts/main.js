@@ -9,6 +9,8 @@ window.jQuery = $;
 var NavComponent = require('./components/NavComponent');
 var HomePageComponent = require('./components/HomePageComponent');
 var RegisterLoginComponent = require('./components/RegisterLoginComponent');
+var BlogsComponent = require('./components/BlogsComponent');
+var CreateBlogComponent = require('./components/CreateBlogComponent');
 var app = document.getElementById('app');
 
 ReactDOM.render(
@@ -36,6 +38,18 @@ var Router = Backbone.Router.extend({
 			app
 			)
 	},
+	blogs: function() {
+		ReactDOM.render(
+			<BlogsComponent />,
+			app
+			)
+	},
+	createBlog: function() {
+		ReactDOM.render(
+			<CreateBlogComponent />,
+			app
+			)
+	}
 });
 
 var r = new Router();

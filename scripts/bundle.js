@@ -31712,6 +31712,44 @@ module.exports = React.createClass({
 
 	render: function render() {
 		return React.createElement(
+			'h1',
+			null,
+			'Blogs'
+		);
+	}
+
+});
+
+},{"backbone":1,"react":160}],162:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var Backbone = require('backbone');
+
+module.exports = React.createClass({
+	displayName: 'exports',
+
+	render: function render() {
+		return React.createElement(
+			'h1',
+			null,
+			'Create Blog Page'
+		);
+	}
+
+});
+
+},{"backbone":1,"react":160}],163:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var Backbone = require('backbone');
+
+module.exports = React.createClass({
+	displayName: 'exports',
+
+	render: function render() {
+		return React.createElement(
 			'section',
 			null,
 			React.createElement(
@@ -31723,7 +31761,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"backbone":1,"react":160}],162:[function(require,module,exports){
+},{"backbone":1,"react":160}],164:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -31810,7 +31848,7 @@ module.exports = React.createClass({
 
 });
 
-},{"backbone":1,"react":160}],163:[function(require,module,exports){
+},{"backbone":1,"react":160}],165:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -31839,7 +31877,6 @@ module.exports = React.createClass({
 				React.createElement(
 					'div',
 					{ className: 'form-group' },
-					errorElement,
 					React.createElement(
 						'label',
 						null,
@@ -31857,6 +31894,7 @@ module.exports = React.createClass({
 					),
 					React.createElement('input', { type: 'password', className: 'form-control', ref: 'password', placeholder: 'Password' })
 				),
+				errorElement,
 				React.createElement(
 					'button',
 					{ type: 'submit', className: 'btn btn-default' },
@@ -31870,7 +31908,6 @@ module.exports = React.createClass({
 				React.createElement(
 					'div',
 					{ className: 'form-group' },
-					errorElement,
 					React.createElement(
 						'label',
 						null,
@@ -31908,6 +31945,7 @@ module.exports = React.createClass({
 					),
 					React.createElement('input', { type: 'password', className: 'form-control', ref: 'password', placeholder: 'Password' })
 				),
+				errorElement,
 				React.createElement(
 					'button',
 					{ type: 'submit', className: 'btn btn-default' },
@@ -31938,8 +31976,8 @@ module.exports = React.createClass({
 		e.preventDefault();
 		var user = new Parse.User();
 		user.signUp({
-			firstName: this.refs.firstName.value,
-			lastName: this.refs.lastName.value,
+			firstname: this.refs.firstName.value,
+			lastname: this.refs.lastName.value,
 			username: this.refs.email.value,
 			password: this.refs.password.value
 		}, {
@@ -31956,7 +31994,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"backbone":1,"react":160}],164:[function(require,module,exports){
+},{"backbone":1,"react":160}],166:[function(require,module,exports){
 'use strict';
 Parse.initialize('kkMpL68O41xvQfa9PVxYz2lNfs8Pf3ADE63mvupZ', 'EEWp0igFHSCD5ZEgg8qwu1tuTIjp93B5SEWXe9zI');
 var React = require('react');
@@ -31968,6 +32006,8 @@ window.jQuery = $;
 var NavComponent = require('./components/NavComponent');
 var HomePageComponent = require('./components/HomePageComponent');
 var RegisterLoginComponent = require('./components/RegisterLoginComponent');
+var BlogsComponent = require('./components/BlogsComponent');
+var CreateBlogComponent = require('./components/CreateBlogComponent');
 var app = document.getElementById('app');
 
 ReactDOM.render(React.createElement(NavComponent, null), document.getElementById('nav'));
@@ -31985,13 +32025,19 @@ var Router = Backbone.Router.extend({
 	},
 	registerLogin: function registerLogin() {
 		ReactDOM.render(React.createElement(RegisterLoginComponent, { router: r }), app);
+	},
+	blogs: function blogs() {
+		ReactDOM.render(React.createElement(BlogsComponent, null), app);
+	},
+	createBlog: function createBlog() {
+		ReactDOM.render(React.createElement(CreateBlogComponent, null), app);
 	}
 });
 
 var r = new Router();
 Backbone.history.start();
 
-},{"./components/HomePageComponent":161,"./components/NavComponent":162,"./components/RegisterLoginComponent":163,"backbone":1,"jquery":4,"react":160,"react-dom":5}]},{},[164])
+},{"./components/BlogsComponent":161,"./components/CreateBlogComponent":162,"./components/HomePageComponent":163,"./components/NavComponent":164,"./components/RegisterLoginComponent":165,"backbone":1,"jquery":4,"react":160,"react-dom":5}]},{},[166])
 
 
 //# sourceMappingURL=bundle.js.map

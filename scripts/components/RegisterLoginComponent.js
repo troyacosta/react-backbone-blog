@@ -17,7 +17,6 @@ module.exports = React.createClass({
 			return(
 				<form className="loginForm" onSubmit={this.onLogin}>
   					<div className="form-group">
-  						{errorElement}
     					<label>Email address</label>
     					<input type="email" className="form-control" ref="email" placeholder="Email" />
   					</div>
@@ -25,6 +24,7 @@ module.exports = React.createClass({
     					<label>Password</label>
     					<input type="password" className="form-control" ref="password" placeholder="Password" />
   					</div>
+  					{errorElement}
   					<button type="submit" className="btn btn-default">Log On!</button>
 				</form>
 			)
@@ -33,7 +33,6 @@ module.exports = React.createClass({
 			return(
 				<form className="registerForm" onSubmit={this.onRegister}>
   					<div className="form-group">
-  						{errorElement}
     					<label>First Name</label>
     					<input type="text" className="form-control" ref="firstName" placeholder="First Name" />
   					</div>
@@ -49,6 +48,7 @@ module.exports = React.createClass({
     					<label>Password</label>
     					<input type="password" className="form-control" ref="password" placeholder="Password" />
   					</div>
+  					{errorElement}
   					<button type="submit" className="btn btn-default">Register!</button>
 				</form>
 			)
@@ -75,8 +75,8 @@ module.exports = React.createClass({
 		e.preventDefault();
 		var user = new Parse.User();
 		user.signUp({
-			firstName: this.refs.firstName.value,
-			lastName: this.refs.lastName.value,
+			firstname: this.refs.firstName.value,
+			lastname: this.refs.lastName.value,
 			username: this.refs.email.value,
 			password: this.refs.password.value
 		},
