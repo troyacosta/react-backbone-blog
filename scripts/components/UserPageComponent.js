@@ -1,7 +1,6 @@
 var React = require('react');
 var BlogPostModel = require('../models/BlogPostModel');
 
-
 module.exports = React.createClass({
 	getInitialState: function() {
 		return({
@@ -10,6 +9,7 @@ module.exports = React.createClass({
 	},
 	componentWillMount: function() {
 		var query = new Parse.Query(BlogPostModel);
+		query.equalTo('user', new Parse.User({objectId: this.props.userId}));
 		query.find().then( (blogs) => {
 			this.setState({blogs: blogs})
 		})
@@ -22,17 +22,14 @@ module.exports = React.createClass({
 					<div>{blog.get('title')}</div>
 					<div>{blog.get('blog')}</div>
 					<img src={blog.get('image')}></img>
-					<div>{blog.get('user').get('firstname')}</div>
 					<div>{date}</div>
 				</div>
 			)
 		}).reverse();
 		return(
-			<section onClick={this.goToUserPage}>
+			<section>
 		 		{posts}
 		 	</section>
 		)
-	},
-	goToUserPage: function() {
 	}
 });

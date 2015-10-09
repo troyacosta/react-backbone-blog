@@ -11,6 +11,7 @@ var HomePageComponent = require('./components/HomePageComponent');
 var RegisterLoginComponent = require('./components/RegisterLoginComponent');
 var BlogsComponent = require('./components/BlogsComponent');
 var CreateBlogComponent = require('./components/CreateBlogComponent');
+var UserPageComponent = require('./components/UserPageComponent');
 var app = document.getElementById('app');
 
 var Router = Backbone.Router.extend({
@@ -20,11 +21,12 @@ var Router = Backbone.Router.extend({
 		'login': 'registerLogin',
 		'blogs': 'blogs',
 		'create': 'createBlog',
-		'logOut': 'logOut'
+		'logOut': 'logOut',
+		'userPage/:id': 'userPage'
 	},
 	home: function() {
 		ReactDOM.render(
-			<HomePageComponent />,
+			<HomePageComponent router={r}/>,
 			app
 			)
 	},
@@ -36,13 +38,19 @@ var Router = Backbone.Router.extend({
 	},
 	blogs: function() {
 		ReactDOM.render(
-			<BlogsComponent />,
+			<BlogsComponent router={r}/>,
 			app
 			)
 	},
 	createBlog: function() {
 		ReactDOM.render(
-			<CreateBlogComponent />,
+			<CreateBlogComponent router={r} />,
+			app
+			)
+	},
+	userPage: function(id) {
+		ReactDOM.render(
+			<UserPageComponent userId={id} />,
 			app
 			)
 	},

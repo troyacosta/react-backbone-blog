@@ -6,14 +6,15 @@ module.exports = React.createClass({
 		this.props.router.on('route', () => {
 			this.forceUpdate();
 		})
-		console.log('testing');
 	},
 	render: function() {
+		var currentUser = Parse.User.current();
 		var links = [];         
-		if(Parse.User.current()) {
+		if(currentUser) {
 			links.push(<li><a href="#blogs">Blogs</a></li>);
 			links.push(<li><a href="#create">Create New Blog</a></li>);
 			links.push(<li><a href="#logOut">Log Out</a></li>);
+			links.push(<li><a href={"#userPage/"+currentUser.id}>{currentUser.get('firstname')} {currentUser.get('lastname')}</a></li>);
 		}
 		else {
 			links.push(<li><a href="#register">Register</a></li>);
