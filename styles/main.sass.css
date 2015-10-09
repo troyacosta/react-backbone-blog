@@ -1,2 +1,5 @@
 body {
   padding-top: 2em; }
+
+.loggedInLinks {
+  visibility: hidden; }

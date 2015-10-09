@@ -2,7 +2,23 @@ var React = require('react');
 var Backbone = require('backbone');
 
 module.exports = React.createClass({
+	componentWillMount: function() {
+		this.props.router.on('blogs', () => {
+			this.forceUpdate();
+		})
+		console.log('testing');
+	},
 	render: function() {
+		var links = [];         
+		if(Parse.User.current()) {
+			links.push(<li><a href="#blogs">Blogs</a></li>);
+			links.push(<li><a href="#create">Create New Blog</a></li>);
+			links.push(<li><a href="#logOut">Log Out</a></li>);
+		}
+		else {
+			links.push(<li><a href="#register">Register</a></li>);
+            links.push(<li><a href="#login">Log In</a></li>);
+		}
 		return(
 			<nav className="navbar navbar-default navbar-custom navbar-fixed-top">
         		<div className="container-fluid">
@@ -15,20 +31,9 @@ module.exports = React.createClass({
                 		</button>
                 		<a className="navbar-brand" href="#home">HOME</a>
             		</div>
-            		<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            		<div className="collapse navbar-collapse">
                	 		<ul className="nav navbar-nav navbar-right">
-                    		<li>
-                        		<a href="#blogs">Blogs</a>
-                    		</li>
-                    		<li>
-                        		<a href="#create">Create New Blog</a>
-                    		</li>
-                    		<li>
-                        		<a href="#register">Register</a>
-                    		</li>
-                    		<li>
-                        		<a href="#login">Log In</a>
-                    		</li>
+                    		{links}
                 		</ul>
             		</div>
         		</div>

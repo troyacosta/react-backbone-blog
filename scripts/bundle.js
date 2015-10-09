@@ -31727,15 +31727,48 @@ var React = require('react');
 var Backbone = require('backbone');
 
 module.exports = React.createClass({
-	displayName: 'exports',
+  displayName: 'exports',
 
-	render: function render() {
-		return React.createElement(
-			'h1',
-			null,
-			'Create Blog Page'
-		);
-	}
+  render: function render() {
+    return React.createElement(
+      'section',
+      null,
+      React.createElement(
+        'h1',
+        null,
+        'Create Blog Page'
+      ),
+      React.createElement(
+        'form',
+        { className: 'newBlogForm' },
+        React.createElement(
+          'div',
+          { className: 'form-group' },
+          React.createElement(
+            'label',
+            null,
+            'Title'
+          ),
+          React.createElement('input', { type: 'text', className: 'form-control', ref: 'title', placeholder: 'title' })
+        ),
+        React.createElement(
+          'div',
+          { className: 'form-group' },
+          React.createElement(
+            'label',
+            null,
+            'Password'
+          ),
+          React.createElement('input', { type: 'password', className: 'form-control', ref: 'password', placeholder: 'Password' })
+        ),
+        React.createElement(
+          'button',
+          { type: 'submit', className: 'btn btn-default' },
+          'Post!'
+        )
+      )
+    );
+  }
 
 });
 
@@ -31768,83 +31801,105 @@ var React = require('react');
 var Backbone = require('backbone');
 
 module.exports = React.createClass({
-    displayName: 'exports',
+  displayName: 'exports',
 
-    render: function render() {
-        return React.createElement(
-            'nav',
-            { className: 'navbar navbar-default navbar-custom navbar-fixed-top' },
-            React.createElement(
-                'div',
-                { className: 'container-fluid' },
-                React.createElement(
-                    'div',
-                    { className: 'navbar-header page-scroll' },
-                    React.createElement(
-                        'button',
-                        { type: 'button', className: 'navbar-toggle', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1' },
-                        React.createElement(
-                            'span',
-                            { className: 'sr-only' },
-                            'Toggle navigation'
-                        ),
-                        React.createElement('span', { className: 'icon-bar' }),
-                        React.createElement('span', { className: 'icon-bar' }),
-                        React.createElement('span', { className: 'icon-bar' })
-                    ),
-                    React.createElement(
-                        'a',
-                        { className: 'navbar-brand', href: '#home' },
-                        'HOME'
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
-                    React.createElement(
-                        'ul',
-                        { className: 'nav navbar-nav navbar-right' },
-                        React.createElement(
-                            'li',
-                            null,
-                            React.createElement(
-                                'a',
-                                { href: '#blogs' },
-                                'Blogs'
-                            )
-                        ),
-                        React.createElement(
-                            'li',
-                            null,
-                            React.createElement(
-                                'a',
-                                { href: '#create' },
-                                'Create New Blog'
-                            )
-                        ),
-                        React.createElement(
-                            'li',
-                            null,
-                            React.createElement(
-                                'a',
-                                { href: '#register' },
-                                'Register'
-                            )
-                        ),
-                        React.createElement(
-                            'li',
-                            null,
-                            React.createElement(
-                                'a',
-                                { href: '#login' },
-                                'Log In'
-                            )
-                        )
-                    )
-                )
-            )
-        );
+  componentWillMount: function componentWillMount() {
+    var _this = this;
+
+    this.props.router.on('blogs', function () {
+      _this.forceUpdate();
+    });
+    console.log('testing');
+  },
+  render: function render() {
+    var links = [];
+    if (Parse.User.current()) {
+      links.push(React.createElement(
+        'li',
+        null,
+        React.createElement(
+          'a',
+          { href: '#blogs' },
+          'Blogs'
+        )
+      ));
+      links.push(React.createElement(
+        'li',
+        null,
+        React.createElement(
+          'a',
+          { href: '#create' },
+          'Create New Blog'
+        )
+      ));
+      links.push(React.createElement(
+        'li',
+        null,
+        React.createElement(
+          'a',
+          { href: '#logOut' },
+          'Log Out'
+        )
+      ));
+    } else {
+      links.push(React.createElement(
+        'li',
+        null,
+        React.createElement(
+          'a',
+          { href: '#register' },
+          'Register'
+        )
+      ));
+      links.push(React.createElement(
+        'li',
+        null,
+        React.createElement(
+          'a',
+          { href: '#login' },
+          'Log In'
+        )
+      ));
     }
+    return React.createElement(
+      'nav',
+      { className: 'navbar navbar-default navbar-custom navbar-fixed-top' },
+      React.createElement(
+        'div',
+        { className: 'container-fluid' },
+        React.createElement(
+          'div',
+          { className: 'navbar-header page-scroll' },
+          React.createElement(
+            'button',
+            { type: 'button', className: 'navbar-toggle', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1' },
+            React.createElement(
+              'span',
+              { className: 'sr-only' },
+              'Toggle navigation'
+            ),
+            React.createElement('span', { className: 'icon-bar' }),
+            React.createElement('span', { className: 'icon-bar' }),
+            React.createElement('span', { className: 'icon-bar' })
+          ),
+          React.createElement(
+            'a',
+            { className: 'navbar-brand', href: '#home' },
+            'HOME'
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'collapse navbar-collapse' },
+          React.createElement(
+            'ul',
+            { className: 'nav navbar-nav navbar-right' },
+            links
+          )
+        )
+      )
+    );
+  }
 
 });
 
@@ -32010,15 +32065,14 @@ var BlogsComponent = require('./components/BlogsComponent');
 var CreateBlogComponent = require('./components/CreateBlogComponent');
 var app = document.getElementById('app');
 
-ReactDOM.render(React.createElement(NavComponent, null), document.getElementById('nav'));
-
 var Router = Backbone.Router.extend({
 	routes: {
 		'home': 'home',
 		'register': 'registerLogin',
 		'login': 'registerLogin',
 		'blogs': 'blogs',
-		'create': 'createBlog'
+		'create': 'createBlog',
+		'logOut': 'logOut'
 	},
 	home: function home() {
 		ReactDOM.render(React.createElement(HomePageComponent, null), app);
@@ -32031,11 +32085,17 @@ var Router = Backbone.Router.extend({
 	},
 	createBlog: function createBlog() {
 		ReactDOM.render(React.createElement(CreateBlogComponent, null), app);
+	},
+	logOut: function logOut() {
+		Parse.User.logOut();
+		this.navigate('home', { trigger: true });
 	}
 });
 
 var r = new Router();
 Backbone.history.start();
+
+ReactDOM.render(React.createElement(NavComponent, { router: r }), document.getElementById('nav'));
 
 },{"./components/BlogsComponent":161,"./components/CreateBlogComponent":162,"./components/HomePageComponent":163,"./components/NavComponent":164,"./components/RegisterLoginComponent":165,"backbone":1,"jquery":4,"react":160,"react-dom":5}]},{},[166])
 

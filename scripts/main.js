@@ -13,18 +13,14 @@ var BlogsComponent = require('./components/BlogsComponent');
 var CreateBlogComponent = require('./components/CreateBlogComponent');
 var app = document.getElementById('app');
 
-ReactDOM.render(
-	<NavComponent />,
-	document.getElementById('nav')
-	);
-
 var Router = Backbone.Router.extend({
 	routes: {
 		'home': 'home',
 		'register': 'registerLogin',
 		'login': 'registerLogin',
 		'blogs': 'blogs',
-		'create': 'createBlog'
+		'create': 'createBlog',
+		'logOut': 'logOut'
 	},
 	home: function() {
 		ReactDOM.render(
@@ -49,8 +45,17 @@ var Router = Backbone.Router.extend({
 			<CreateBlogComponent />,
 			app
 			)
+	},
+	logOut: function() {
+		Parse.User.logOut();
+		this.navigate('home', {trigger: true});
 	}
 });
 
 var r = new Router();
 Backbone.history.start();
+
+ReactDOM.render(
+	<NavComponent router={r} />,
+	document.getElementById('nav')
+	);
