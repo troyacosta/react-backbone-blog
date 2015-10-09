@@ -31806,7 +31806,7 @@ module.exports = React.createClass({
   componentWillMount: function componentWillMount() {
     var _this = this;
 
-    this.props.router.on('blogs', function () {
+    this.props.router.on('route', function () {
       _this.forceUpdate();
     });
     console.log('testing');
@@ -32027,7 +32027,6 @@ module.exports = React.createClass({
 	onRegister: function onRegister(e) {
 		var _this2 = this;
 
-		console.log('this is working');
 		e.preventDefault();
 		var user = new Parse.User();
 		user.signUp({

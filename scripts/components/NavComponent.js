@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 
 module.exports = React.createClass({
 	componentWillMount: function() {
-		this.props.router.on('blogs', () => {
+		this.props.router.on('route', () => {
 			this.forceUpdate();
 		})
 		console.log('testing');

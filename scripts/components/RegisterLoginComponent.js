@@ -71,7 +71,6 @@ module.exports = React.createClass({
 		});
 	},
 	onRegister: function(e) {
-		console.log('this is working');
 		e.preventDefault();
 		var user = new Parse.User();
 		user.signUp({
