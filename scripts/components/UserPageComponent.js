@@ -10,7 +10,7 @@ module.exports = React.createClass({
 	componentWillMount: function() {
 		var query = new Parse.Query(BlogPostModel);
 		query.equalTo('user', new Parse.User({objectId: this.props.userId}));
-		query.find().then( (blogs) => {
+		find().then( (blogs) => {
 			this.setState({blogs: blogs})
 		})
 	},

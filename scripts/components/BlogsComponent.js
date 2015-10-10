@@ -10,19 +10,24 @@ module.exports = React.createClass({
 	},
 	componentWillMount: function() {
 		var query = new Parse.Query(BlogPostModel);
-		query.find().then( (blogs) => {
-			this.setState({blogs: blogs})
-		})
-	},
+			query.include('user');
+			query.find().then( (blogs) => {
+			this.setState({blogs: blogs});
+		});
+
+	},	
 	render: function() {
 		var posts = this.state.blogs.map(function(blog) {
 			var date = blog.get('createdAt').toString().slice(0, 15);
+			var user = blog.get('user');
+			var poster = user.get('firstname') + ' ' + user.get('lastname');
+	
 			return(
 				<div>
 					<div>{blog.get('title')}</div>
 					<div>{blog.get('blog')}</div>
 					<img src={blog.get('image')}></img>
-					<div>{blog.get('user').get('firstname')}</div>
+					<div>{poster}</div>
 					<div>{date}</div>
 				</div>
 			)
@@ -32,7 +37,5 @@ module.exports = React.createClass({
 		 		{posts}
 		 	</section>
 		)
-	},
-	goToUserPage: function() {
 	}
 });

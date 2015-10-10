@@ -31719,6 +31719,7 @@ module.exports = React.createClass({
 		var _this = this;
 
 		var query = new Parse.Query(BlogPostModel);
+		query.include('user');
 		query.find().then(function (blogs) {
 			_this.setState({ blogs: blogs });
 		});
@@ -31726,10 +31727,8 @@ module.exports = React.createClass({
 	render: function render() {
 		var posts = this.state.blogs.map(function (blog) {
 			var date = blog.get('createdAt').toString().slice(0, 15);
-			var poster = blog.get('user');
-			new Parse.Query(poster);
-
-			var poster = blog.get('user').get('firstname');
+			var user = blog.get('user');
+			var poster = user.get('firstname') + ' ' + user.get('lastname');
 
 			return React.createElement(
 				'div',
@@ -31748,7 +31747,7 @@ module.exports = React.createClass({
 				React.createElement(
 					'div',
 					null,
-					blog.get('user').get('firstname')
+					poster
 				),
 				React.createElement(
 					'div',
@@ -31762,8 +31761,7 @@ module.exports = React.createClass({
 			{ onClick: this.goToUserPage },
 			posts
 		);
-	},
-	goToUserPage: function goToUserPage() {}
+	}
 });
 
 },{"../models/BlogPostModel":168,"react":160}],162:[function(require,module,exports){
@@ -32180,7 +32178,7 @@ module.exports = React.createClass({
 
 		var query = new Parse.Query(BlogPostModel);
 		query.equalTo('user', new Parse.User({ objectId: this.props.userId }));
-		query.find().then(function (blogs) {
+		find().then(function (blogs) {
 			_this.setState({ blogs: blogs });
 		});
 	},
