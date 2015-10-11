@@ -1,6 +1,6 @@
 var React = require('react');
 var BlogPostModel = require('../models/BlogPostModel');
-
+var Backbone = require('backbone');
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -14,26 +14,24 @@ module.exports = React.createClass({
 			query.find().then( (blogs) => {
 			this.setState({blogs: blogs});
 		});
-
 	},	
 	render: function() {
-		var posts = this.state.blogs.map(function(blog) {
+			var posts = this.state.blogs.map(function(blog) {
 			var date = blog.get('createdAt').toString().slice(0, 15);
 			var user = blog.get('user');
-			var poster = user.get('firstname') + ' ' + user.get('lastname');
-	
+			var poster = user.get('firstname') + ' ' + user.get('lastname');	
 			return(
-				<div>
+				<div className="blogPostContainer">
 					<div>{blog.get('title')}</div>
 					<div>{blog.get('blog')}</div>
-					<img src={blog.get('image')}></img>
-					<div>{poster}</div>
+					<div className="imageContainer"><img src={blog.get('image')}></img></div>
+					<div><a href={"#userPage/"+user.id}>{poster}</a></div>
 					<div>{date}</div>
 				</div>
 			)
 		}).reverse();
 		return(
-			<section onClick={this.goToUserPage}>
+			<section>
 		 		{posts}
 		 	</section>
 		)

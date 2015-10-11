@@ -31706,6 +31706,7 @@ module.exports = require('./lib/React');
 
 var React = require('react');
 var BlogPostModel = require('../models/BlogPostModel');
+var Backbone = require('backbone');
 
 module.exports = React.createClass({
 	displayName: 'exports',
@@ -31729,10 +31730,9 @@ module.exports = React.createClass({
 			var date = blog.get('createdAt').toString().slice(0, 15);
 			var user = blog.get('user');
 			var poster = user.get('firstname') + ' ' + user.get('lastname');
-
 			return React.createElement(
 				'div',
-				null,
+				{ className: 'blogPostContainer' },
 				React.createElement(
 					'div',
 					null,
@@ -31743,11 +31743,19 @@ module.exports = React.createClass({
 					null,
 					blog.get('blog')
 				),
-				React.createElement('img', { src: blog.get('image') }),
+				React.createElement(
+					'div',
+					{ className: 'imageContainer' },
+					React.createElement('img', { src: blog.get('image') })
+				),
 				React.createElement(
 					'div',
 					null,
-					poster
+					React.createElement(
+						'a',
+						{ href: "#userPage/" + user.id },
+						poster
+					)
 				),
 				React.createElement(
 					'div',
@@ -31758,13 +31766,13 @@ module.exports = React.createClass({
 		}).reverse();
 		return React.createElement(
 			'section',
-			{ onClick: this.goToUserPage },
+			null,
 			posts
 		);
 	}
 });
 
-},{"../models/BlogPostModel":168,"react":160}],162:[function(require,module,exports){
+},{"../models/BlogPostModel":168,"backbone":1,"react":160}],162:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -32178,7 +32186,7 @@ module.exports = React.createClass({
 
 		var query = new Parse.Query(BlogPostModel);
 		query.equalTo('user', new Parse.User({ objectId: this.props.userId }));
-		find().then(function (blogs) {
+		query.find().then(function (blogs) {
 			_this.setState({ blogs: blogs });
 		});
 	},
