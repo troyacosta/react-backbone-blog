@@ -32191,6 +32191,7 @@ module.exports = React.createClass({
 		});
 	},
 	render: function render() {
+		var This = this;
 		var posts = this.state.blogs.map(function (blog) {
 			var date = blog.get('createdAt').toString().slice(0, 15);
 			return React.createElement(
@@ -32211,6 +32212,11 @@ module.exports = React.createClass({
 					'div',
 					null,
 					date
+				),
+				React.createElement(
+					'button',
+					{ className: 'btn btn-default', onClick: This.deletePost(blog) },
+					'Delete Post'
 				)
 			);
 		}).reverse();
@@ -32219,6 +32225,11 @@ module.exports = React.createClass({
 			null,
 			posts
 		);
+	},
+	deletePost: function deletePost(blog) {
+		return function (event) {
+			blog.destroy();
+		};
 	}
 });
 

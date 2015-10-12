@@ -15,7 +15,8 @@ module.exports = React.createClass({
 		})
 	},
 	render: function() {
-		var posts = this.state.blogs.map(function(blog) {
+		var This = this;
+		var posts = this.state.blogs.map(function (blog) {
 			var date = blog.get('createdAt').toString().slice(0, 15);
 			return(
 				<div>
@@ -23,6 +24,7 @@ module.exports = React.createClass({
 					<div>{blog.get('blog')}</div>
 					<img src={blog.get('image')}></img>
 					<div>{date}</div>
+					<button className="btn btn-default" onClick={This.deletePost(blog)}>Delete Post</button>
 				</div>
 			)
 		}).reverse();
@@ -31,5 +33,11 @@ module.exports = React.createClass({
 		 		{posts}
 		 	</section>
 		)
+	},
+	deletePost: function (blog) {
+		return function(event) {
+			blog.destroy();
+		}
+
 	}
 });
