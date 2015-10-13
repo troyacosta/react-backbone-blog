@@ -31732,21 +31732,25 @@ module.exports = React.createClass({
 			var poster = user.get('firstname') + ' ' + user.get('lastname');
 			return React.createElement(
 				'div',
-				{ className: 'blogPostContainer' },
+				{ className: 'blogPostContainer row col-sm-8 col-sm-offset-2' },
 				React.createElement(
 					'div',
 					null,
-					blog.get('title')
+					React.createElement(
+						'h1',
+						{ className: 'blogTitle' },
+						blog.get('title')
+					)
 				),
 				React.createElement(
 					'div',
-					null,
+					{ className: 'blog' },
 					blog.get('blog')
 				),
 				React.createElement(
 					'div',
 					{ className: 'imageContainer' },
-					React.createElement('img', { src: blog.get('image') })
+					React.createElement('img', { className: 'img-responsive', src: blog.get('image') })
 				),
 				React.createElement(
 					'div',
