@@ -30,8 +30,8 @@ module.exports = React.createClass({
 		}).reverse();
 		return(
 			<section>
-		 		{posts}
-		 	</section>
+				{posts}
+			</section>
 		)
 	},
 	deletePost: function (blog) {
